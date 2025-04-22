@@ -1,0 +1,30 @@
+.todo-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+
+    &--completed {
+        :not(.todo-item__btn-delete) {
+            text-decoration: line-through;
+            background-color: #e0e0e0;
+        }
+        background-color: #e0e0e0;
+    }
+
+    &__btn-delete {
+        background-color: #ff4d4d;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 5px 10px;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #ff1a1a;
+        }
+    }
+}
