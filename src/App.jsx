@@ -1,12 +1,43 @@
 import * as styles from "./App.module.scss";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useReducer } from "react";
 import { todos } from "./components/TodoList/data";
 import { TodoList } from "@/components/TodoList/TodoList";
 import { Header } from "@/components/Header/Header";
 import { TodoAdd } from "./components/TodoAdd/TodoAdd";
 import { TodoFilter } from "./components/TodoFilter/TodoFilter";
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "ADD_TASK": {
+      if (action.payload.trim()) {
+        const newId = state.length ? state[state.length - 1].id + 1 : 1;
+        return [
+          ...state,
+          { id: newId, text: action.payload, completed: false },
+        ];
+      }
+      return state;
+    }
+    case "DELETE_TASK":
+      return state.filter((task) => task.id !== action.payload);
+    case "TOGGLE_TASK":
+      return state.map((task) =>
+        task.id === action.payload
+          ? { ...task, completed: !task.completed }
+          : task
+      );
+    case "EDIT_TASK":
+      return state.map((task) =>
+        task.id === action.payload.id
+          ? { ...task, text: action.payload.updatedValue }
+          : task
+      );
+    default:
+      return state;
+  }
+};
 export const App = () => {
-  const [tasks, setTasks] = useState(() => {
+  const [tasks, dispatch] = useReducer(reducer, undefined, () => {
     const savedTasks = localStorage.getItem("tasks");
     return savedTasks ? JSON.parse(savedTasks) : todos;
   });
@@ -16,38 +47,8 @@ export const App = () => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
 
-  const handleDeleteTask = (id) => {
-    setTasks((prevTasks) => prevTasks.filter((task) => task.id !== id));
-  };
-
-  const handleToggleTask = (id) => {
-    setTasks((prevTasks) =>
-      prevTasks.map((task) =>
-        task.id === id ? { ...task, completed: !task.completed } : task
-      )
-    );
-  };
-
-  const handleAddTask = (newTask) => {
-    if (newTask.trim()) {
-      const newId = tasks.length ? tasks[tasks.length - 1].id + 1 : 1;
-      setTasks((prevTasks) => [
-        ...prevTasks,
-        { id: newId, text: newTask, completed: false },
-      ]);
-    }
-  };
-
   const handlerFilterTasks = (filter) => {
     setFilter(filter);
-  };
-
-  const handleEditTask = (id, updatedText) => {
-    setTasks((prevTasks) =>
-      prevTasks.map((task) =>
-        task.id === id ? { ...task, text: updatedText } : task
-      )
-    );
   };
 
   const getFilterTasks = () => {
@@ -67,15 +68,25 @@ export const App = () => {
     <div className={styles.app}>
       <Header />
       <main>
-        <TodoAdd handleAddTask={handleAddTask} />
+        <TodoAdd
+          handleAddTask={(newTask) =>
+            dispatch({ type: "ADD_TASK", payload: newTask })
+          }
+        />
         <TodoFilter handlerFilterTasks={handlerFilterTasks} />
+        <TodoList
+          tasks={filteredTasks}
+          handleDeleteTask={(id) =>
+            dispatch({ type: "DELETE_TASK", payload: id })
+          }
+          handleToggleTask={(id) =>
+            dispatch({ type: "TOGGLE_TASK", payload: id })
+          }
+          handleEditTask={(id, updatedValue) =>
+            dispatch({ type: "EDIT_TASK", payload: { id, updatedValue } })
+          }
+        />
       </main>
-      <TodoList
-        tasks={filteredTasks}
-        handleDeleteTask={handleDeleteTask}
-        handleToggleTask={handleToggleTask}
-        handleEditTask={handleEditTask}
-      />
     </div>
   );
 };

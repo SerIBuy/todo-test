@@ -8,16 +8,16 @@ export const TodoAdd = ({ handleAddTask }) => {
   }, [handleAddTask]);
   return (
     <section className={styles["add-task"]}>
-      <label htmlFor="new-task">Добавить новую задачу:</label>
+      <label htmlFor="new-task">Добавить задачу:</label>
       <input
         id={"new-task"}
         type="text"
-        placeholder="Add a new task"
+        placeholder="Добавить задачу"
         value={newTask}
         onChange={(e) => setNewTask(e.target.value)}
       />
       <button
-        className={styles["add-task__button"]}
+        className={styles["add-task__btn-add"]}
         onClick={() => handleAddTask(newTask)}
       >
         Добавить задачу

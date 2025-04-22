@@ -1,18 +1,32 @@
 .add-task {
     display: flex;
-    gap: 10px;
+    gap: 20px;
     align-items: center;
+    padding: 20px;
 
-    &__button {
-        background-color: #ff4d4d;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 5px 10px;
-    cursor: pointer;
-
-    &:hover {
-        background-color: #ff1a1a;
+    label {
+        font-size: 40px;
+        font-weight: bold;
     }
+    input {
+        width: 40%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 26px;
+    }
+
+    &__btn-add {
+        background-color: #ff4d4d;
+        font-size: 24px;
+        padding: 10px;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #ff1a1a;
+        }
     }
 }
