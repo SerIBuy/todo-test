@@ -1,16 +1,19 @@
-import React from "react";
-import { useState } from "react";
-import * as styles from "./TodoItem.module.scss";
-import cn from "classnames";
-export const TodoItem = ({ task, deleteTask, toggleTask, editTask }) => {
+import React, { useState } from 'react';
+
+import cn from 'classnames';
+import * as styles from './TodoItem.module.scss';
+
+export default function TodoItem({
+  task, deleteTask, toggleTask, editTask,
+}) {
   const [isEditing, setIsEditing] = useState(false);
   return (
     <li
-      className={cn(styles["todo-item"], {
-        [styles["todo-item--completed"]]: task.completed,
+      className={cn(styles['todo-item'], {
+        [styles['todo-item--completed']]: task.completed,
       })}
     >
-      <div className={styles["todo-item__left-side"]}>
+      <div className={styles['todo-item__left-side']}>
         <input
           type="checkbox"
           checked={task.completed}
@@ -26,7 +29,7 @@ export const TodoItem = ({ task, deleteTask, toggleTask, editTask }) => {
               setIsEditing(false);
             }}
             onKeyDown={(e) => {
-              if (e.key === "Enter") {
+              if (e.key === 'Enter') {
                 editTask(task.id, e.target.value);
                 setIsEditing(false);
               }
@@ -34,20 +37,20 @@ export const TodoItem = ({ task, deleteTask, toggleTask, editTask }) => {
           />
         ) : (
           <span
-            className={cn(styles["todo-item__text"], {
-              [styles["todo-item__text--completed"]]: task.completed,
+            className={cn(styles['todo-item__text'], {
+              [styles['todo-item__text--completed']]: task.completed,
             })}
           >
             {task.text}
           </span>
         )}
       </div>
-      <div className={styles["todo-item__right-side"]}>
+      <div className={styles['todo-item__right-side']}>
         <button
           type="button"
           className={cn(
-            styles["todo-item__btn"],
-            styles["todo-item__btn--edit"]
+            styles['todo-item__btn'],
+            styles['todo-item__btn--edit'],
           )}
           onClick={() => setIsEditing(!isEditing)}
         >
@@ -55,7 +58,7 @@ export const TodoItem = ({ task, deleteTask, toggleTask, editTask }) => {
         </button>
         <button
           type="button"
-          className={styles["todo-item__btn"]}
+          className={styles['todo-item__btn']}
           onClick={() => deleteTask(task.id)}
         >
           Удалить
@@ -63,4 +66,4 @@ export const TodoItem = ({ task, deleteTask, toggleTask, editTask }) => {
       </div>
     </li>
   );
-};
+}

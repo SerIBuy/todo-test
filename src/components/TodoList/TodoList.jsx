@@ -1,15 +1,16 @@
-import React from "react";
-import * as styles from "./TodoList.module.scss";
-import { TodoItem } from "@/components/TodoItem/TodoItem";
-export const TodoList = ({
+import React from 'react';
+import TodoItem from '@/components/TodoItem/TodoItem';
+import * as styles from './TodoList.module.scss';
+
+export default function TodoList({
   tasks,
   handleToggleTask,
   handleDeleteTask,
   handleEditTask,
-}) => {
+}) {
   return (
     <section>
-      <ul className={styles["todo-list"]}>
+      <ul className={styles['todo-list']}>
         {tasks.map((task) => (
           <TodoItem
             key={task.id}
@@ -22,4 +23,4 @@ export const TodoList = ({
       </ul>
     </section>
   );
-};
+}
