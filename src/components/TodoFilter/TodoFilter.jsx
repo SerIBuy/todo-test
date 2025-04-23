@@ -1,3 +1,4 @@
+import React from "react";
 import * as styles from "./TodoFilter.module.scss";
 export const TodoFilter = ({ handlerFilterTasks }) => {
   return (
@@ -5,12 +6,17 @@ export const TodoFilter = ({ handlerFilterTasks }) => {
       <label>Фильтр:</label>
       <select
         name="filter"
-        id="filter"
         onChange={(e) => handlerFilterTasks(e.target.value)}
       >
-        <option value="all">Все</option>
-        <option value="completed">Завершенные</option>
-        <option value="active">Активные</option>
+        <option name="all" value="all">
+          Все
+        </option>
+        <option name="completed" value="completed">
+          Выполненные
+        </option>
+        <option name="active" value="active">
+          Активные
+        </option>
       </select>
     </section>
   );

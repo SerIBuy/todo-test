@@ -8,8 +8,8 @@
   "description": "",
   "dependencies": {
     "classnames": "^2.5.1",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
   },
   "scripts": {
     "start": "webpack serve --mode development",

@@ -1,6 +1,7 @@
+import React from "react";
 import * as styles from "./App.module.scss";
 import { useState, useEffect, useReducer } from "react";
-import { todos } from "./components/TodoList/data";
+import { todos } from "./data";
 import { TodoList } from "@/components/TodoList/TodoList";
 import { Header } from "@/components/Header/Header";
 import { TodoAdd } from "./components/TodoAdd/TodoAdd";

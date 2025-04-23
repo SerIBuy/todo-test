@@ -1,6 +1,13 @@
 .app {
     display: flex;
     flex-direction: column;
-    width: 980px;
+    min-width: 320px;
     margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+
+    @media (min-width: 768px) {
+        padding: 10px;
+        max-width: 1024px;
+    }
 }

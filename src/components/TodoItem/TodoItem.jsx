@@ -1,3 +1,4 @@
+import React from "react";
 import { useState } from "react";
 import * as styles from "./TodoItem.module.scss";
 import cn from "classnames";
@@ -43,6 +44,7 @@ export const TodoItem = ({ task, deleteTask, toggleTask, editTask }) => {
       </div>
       <div className={styles["todo-item__right-side"]}>
         <button
+          type="button"
           className={cn(
             styles["todo-item__btn"],
             styles["todo-item__btn--edit"]
@@ -52,6 +54,7 @@ export const TodoItem = ({ task, deleteTask, toggleTask, editTask }) => {
           Редактировать
         </button>
         <button
+          type="button"
           className={styles["todo-item__btn"]}
           onClick={() => deleteTask(task.id)}
         >

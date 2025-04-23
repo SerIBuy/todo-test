@@ -1,3 +1,4 @@
+import React from "react";
 import { useState, useEffect } from "react";
 import * as styles from "./TodoAdd.module.scss";
 export const TodoAdd = ({ handleAddTask }) => {
@@ -8,15 +9,14 @@ export const TodoAdd = ({ handleAddTask }) => {
   }, [handleAddTask]);
   return (
     <section className={styles["add-task"]}>
-      <label htmlFor="new-task">Добавить задачу:</label>
       <input
-        id={"new-task"}
         type="text"
         placeholder="Добавить задачу"
         value={newTask}
         onChange={(e) => setNewTask(e.target.value)}
       />
       <button
+        type="button"
         className={styles["add-task__btn-add"]}
         onClick={() => handleAddTask(newTask)}
       >
