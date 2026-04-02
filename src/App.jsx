@@ -1,47 +1,21 @@
-import React, { useState, useEffect, useReducer } from 'react';
-import TodoList from '@/components/TodoList/TodoList';
-import Header from '@/components/Header/Header';
-import * as styles from './App.module.scss';
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import TodoList from "@/components/TodoList/TodoList";
+import Header from "@/components/Header/Header";
+import * as styles from "./App.module.scss";
 
-import todos from './data';
-import TodoAdd from './components/TodoAdd/TodoAdd';
-import TodoFilter from './components/TodoFilter/TodoFilter';
+import TodoAdd from "./components/TodoAdd/TodoAdd";
+import TodoFilter from "./components/TodoFilter/TodoFilter";
 
-const reducer = (state, action) => {
-  switch (action.type) {
-    case 'ADD_TASK': {
-      if (action.payload.trim()) {
-        const newId = state.length ? state[state.length - 1].id + 1 : 1;
-        return [
-          ...state,
-          { id: newId, text: action.payload, completed: false },
-        ];
-      }
-      return state;
-    }
-    case 'DELETE_TASK':
-      return state.filter((task) => task.id !== action.payload);
-    case 'TOGGLE_TASK':
-      return state.map((task) => (task.id === action.payload
-        ? { ...task, completed: !task.completed }
-        : task));
-    case 'EDIT_TASK':
-      return state.map((task) => (task.id === action.payload.id
-        ? { ...task, text: action.payload.updatedValue }
-        : task));
-    default:
-      return state;
-  }
-};
+import { addTask, deleteTask, toggleTask, editTask } from "./tasksSlice";
+
 export default function App() {
-  const [tasks, dispatch] = useReducer(reducer, undefined, () => {
-    const savedTasks = localStorage.getItem('tasks');
-    return savedTasks ? JSON.parse(savedTasks) : todos;
-  });
-  const [filter, setFilter] = useState('all');
+  const [filter, setFilter] = useState("all");
+  const dispatch = useDispatch();
+  const tasks = useSelector((state) => state.tasks);
 
   useEffect(() => {
-    localStorage.setItem('tasks', JSON.stringify(tasks));
+    localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
 
   const handlerFilterTasks = (selectedFilter) => {
@@ -50,9 +24,9 @@ export default function App() {
 
   const getFilterTasks = () => {
     switch (filter) {
-      case 'completed':
+      case "completed":
         return tasks.filter((task) => task.completed);
-      case 'active':
+      case "active":
         return tasks.filter((task) => !task.completed);
       default:
         return tasks;
@@ -65,15 +39,15 @@ export default function App() {
     <div className={styles.app}>
       <Header />
       <main>
-        <TodoAdd
-          handleAddTask={(newTask) => dispatch({ type: 'ADD_TASK', payload: newTask })}
-        />
+        <TodoAdd handleAddTask={(newTask) => dispatch(addTask(newTask))} />
         <TodoFilter handlerFilterTasks={handlerFilterTasks} />
         <TodoList
           tasks={filteredTasks}
-          handleDeleteTask={(id) => dispatch({ type: 'DELETE_TASK', payload: id })}
-          handleToggleTask={(id) => dispatch({ type: 'TOGGLE_TASK', payload: id })}
-          handleEditTask={(id, updatedValue) => dispatch({ type: 'EDIT_TASK', payload: { id, updatedValue } })}
+          handleDeleteTask={(id) => dispatch(deleteTask(id))}
+          handleToggleTask={(id) => dispatch(toggleTask(id))}
+          handleEditTask={(id, updatedValue) =>
+            dispatch(editTask({ id, updatedValue }))
+          }
         />
       </main>
     </div>

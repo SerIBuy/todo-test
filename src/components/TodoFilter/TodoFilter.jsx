@@ -1,5 +1,5 @@
-import React from 'react';
-import * as styles from './TodoFilter.module.scss';
+import React from "react";
+import * as styles from "./TodoFilter.module.scss";
 
 export default function TodoFilter({ handlerFilterTasks }) {
   return (

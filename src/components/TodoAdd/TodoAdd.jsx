@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
-import * as styles from './TodoAdd.module.scss';
+import * as styles from "./TodoAdd.module.scss";
 
 export default function TodoAdd({ handleAddTask }) {
-  const [newTask, setNewTask] = useState('');
+  const [newTask, setNewTask] = useState("");
 
   useEffect(() => {
-    setNewTask('');
+    setNewTask("");
   }, [handleAddTask]);
   return (
-    <section className={styles['add-task']}>
+    <section className={styles["add-task"]}>
       <input
         type="text"
         placeholder="Добавить задачу"
@@ -18,7 +18,7 @@ export default function TodoAdd({ handleAddTask }) {
       />
       <button
         type="button"
-        className={styles['add-task__btn-add']}
+        className={styles["add-task__btn-add"]}
         onClick={() => handleAddTask(newTask)}
       >
         Добавить задачу
